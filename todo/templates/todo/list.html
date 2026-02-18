@@ -1,0 +1,31 @@
+{% extends 'todo/base.html' %}
+
+{% block content %}
+    <h1>My Quest Log</h1>
+    <div style="text-align: right; margin-bottom: 2rem;">
+        <a href="{% url 'todo_create' %}" class="btn btn-primary">+ Create New Quest</a>
+    </div>
+
+    {% for todo in todos %}
+        <div class="todo-item {% if todo.is_completed %}completed{% endif %}">
+            <div class="todo-info">
+                <h3>{{ todo.title }}</h3>
+                {% if todo.description %}
+                    <p>{{ todo.description }}</p>
+                {% endif %}
+                {% if todo.due_date %}
+                    <div class="todo-date">📅 Due: {{ todo.due_date|date:"M d, Y H:i" }}</div>
+                {% endif %}
+            </div>
+            <div class="actions">
+                <a href="{% url 'todo_toggle' todo.pk %}" class="btn" style="background: rgba(255,255,255,0.1);">
+                    {% if todo.is_completed %}🔓 Unresolve{% else %}✅ Resolve{% endif %}
+                </a>
+                <a href="{% url 'todo_update' todo.pk %}" class="btn" style="background: rgba(99, 102, 241, 0.2); color: #818cf8;">Edit</a>
+                <a href="{% url 'todo_delete' todo.pk %}" class="btn" style="background: rgba(236, 72, 153, 0.2); color: #f472b6;">Delete</a>
+            </div>
+        </div>
+    {% empty %}
+        <p style="text-align: center; opacity: 0.5;">No quests found. Time to embark on a new one!</p>
+    {% endfor %}
+{% endblock %}

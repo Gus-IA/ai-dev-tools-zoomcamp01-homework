@@ -1,0 +1,23 @@
+{% extends 'todo/base.html' %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    <form method="post" style="max-width: 500px; margin: 0 auto;">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <div style="color: var(--accent); font-size: 0.8rem; margin-top: 0.25rem;">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+            <button type="submit" class="btn btn-primary" style="flex: 1;">Save Quest</button>
+            <a href="{% url 'todo_list' %}" class="btn" style="background: rgba(255,255,255,0.1); flex: 1; text-align: center;">Cancel</a>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'todo/base.html' %}
+
+{% block content %}
+    <h1>Abandon Quest?</h1>
+    <p style="text-align: center; margin-bottom: 2rem;">Are you sure you want to delete "<strong>{{ todo.title }}</strong>"? This action cannot be undone.</p>
+    
+    <form method="post" style="text-align: center;">
+        {% csrf_token %}
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+            <button type="submit" class="btn" style="background: var(--accent); color: white;">Yes, Delete</button>
+            <a href="{% url 'todo_list' %}" class="btn" style="background: rgba(255,255,255,0.1);">Cancel</a>
+        </div>
+    </form>
+{% endblock %}
